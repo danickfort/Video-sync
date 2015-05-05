@@ -1,3 +1,11 @@
+Video-sync is a tool that allows to automatically create long videos out of your home made videos on your camera.
+The idea is basically that you only have to put every video from one trip into one folder and the script does the rest.
+
+It's also going to be syncing this long version with a media center.
+
+The tool can detect new videos, updates and modification in folder content to adjust and make new long versions.
+
+
 **In development**
 
 Any comment is welcome
