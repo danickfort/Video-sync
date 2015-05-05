@@ -248,7 +248,7 @@ def exec_todo(file_to_exec='/share/Scripts/todo.sh'):
         out.wait()
     print("file done")
 
-def create_chapters_list(chapters_duration):
+def create_chapters_list(chapters_duration, folder_path):
     '''
     Function that creates a file containning the file list and the duration of the videos to create a new video
     Takes a folder in entry, creates a file
@@ -257,21 +257,23 @@ def create_chapters_list(chapters_duration):
     duration_file = ''
     previous = ''
     for n,filename in enumerate(sorted(chapters_duration)):
-        print n
         if (n == 0): #First Video
-            print '{}\n00:00:{}'.format(filename.encode('utf-8'),chapters_duration[filename][1])
-            last = datetime.strptime(chapters_duration[filename][1],'%H:%M:%S.%f')
+            output_string += '{}\n00:00:{}'.format(filename.encode('utf-8'),chapters_duration[filename][1])
+            o = datetime.strptime(chapters_duration[filename][1],'%S.%f')
+            d = datetime.strptime(chapters_duration[filename][0],'%H:%M:%S.%f')
+            deltaO = timedelta(hours = o.hour, minutes = o.minute, seconds = o.second, microseconds = o.microsecond)
+            deltaD = timedelta(hours = d.hour, minutes = d.minute, seconds = d.second, microseconds = d.microsecond)
+            last = (deltaO + deltaD)
         else:
-            t = datetime.strptime(chapters_duration[filename][0],'%H:%M:%S.%f')
-            delta_time = timedelta(hours = t.hour, minutes = t.minute, seconds = t.second, microseconds = t.microsecond)
-            print '{}\n{}'.format(filename.encode('utf-8'),str(delta_time + last))
-            last = delta_time + last
-        #print chapters_duration[filename][0]
-        #get_video_durations(filename)
-        #output_string += "file \'" + filename + "\'\n"
-        #print(output_string)
-    #with open(folder_path + '/chapters.txt', 'w') as file_list:
-        #file_list.write(output_string.encode('utf-8'))
+            o = datetime.strptime(chapters_duration[filename][1],'%S.%f')
+            d = datetime.strptime(chapters_duration[filename][0],'%H:%M:%S.%f')
+            deltaO = timedelta(hours = o.hour, minutes = o.minute, seconds = o.second, microseconds = o.microsecond)
+            deltaD = timedelta(hours = d.hour, minutes = d.minute, seconds = d.second, microseconds = d.microsecond)
+            output_string += '{}\n{}'.format(filename.encode('utf-8'),str(deltaO + last))
+            last = deltaD + deltaO + last
+    with open(folder_path + '/chapters.txt', 'w') as file_list:
+        file_list.write(output_string.encode('utf-8'))
+
 #Function that gets a key in a dict using its value
 #Dict and key
 def get_key_from_value(structure, value):
