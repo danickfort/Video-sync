@@ -97,11 +97,11 @@ def get_video_duration(filepath):
     offset = re.compile('[0-9]{1}\.[0-9]{6}')
     filepath = filepath.encode('utf-8')
     command = "/share/Scripts/ffmpeg-static/ffprobe '{}'".format(filepath)
-    proc = subprocess.Popen(command,shell=True, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-    stdout,err = proc.communicate()
-    vid_duration = re.findall(duration,err)[0]
-    vid_offset = float(re.findall(offset,err)[0])
-    total_duration = datetime.strptime(vid_duration,'%H:%M:%S.%f') + timedelta(seconds = vid_offset)
+    proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr = subprocess.PIPE)
+    stdout, err = proc.communicate()
+    vid_duration = re.findall(duration, err)[0]
+    vid_offset = float(re.findall(offset, err)[0])
+    total_duration = datetime.strptime(vid_duration, '%H:%M:%S.%f') + timedelta(seconds = vid_offset)
     #print vid_duration,vid_offset,type(vid_duration),type(vid_offset)
     return(total_duration.strftime('%H:%M:%S.%f'),str(vid_offset))
 
@@ -119,21 +119,21 @@ def md5_for_file(filepath, block_size=128):
             if (n == 15):
                 break
             md5.update(data)
-    return md5.hexdigest()
+    return (md5.hexdigest())
 
 
 
 #Function that writes a dir structure to dir_tree.txt file
 #Input: structure
 #Output: NA
-def write_structure(structure,file='dir_tree.txt'):
+def write_structure(structure, file='dir_tree.txt'):
     with open(file, 'w') as outfile:
         json.dump(structure, outfile)
 #Function that reads a dir file from a json file
 #Input: dir_tree.txt file
 #Output: structure dict
 def read_structure_from_file(infile):
-    with codecs.open(infile,'r','utf-8') as f:
+    with codecs.open(infile, 'r', 'utf-8') as f:
         try:
             structure = json.load(f)
         except:
@@ -184,7 +184,7 @@ def update_structure(past_structure, new_structure):
                 print('writing new struct to disk')
                 del present_structure[ID]
     present_paths = get_path_list(present_structure)  # Get an image of the current structure state
-for new_ID in new_structure.keys():  # Seek out new folders
+    for new_ID in new_structure.keys():  # Seek out new folders
         #add_to_todo_file(new_path = folder_path, what = 'create')
         if new_ID not in present_structure.keys() and new_structure[new_ID]['path'] not in present_paths: #New videos
             print(color("[NEW]      ", 'green') + new_structure[new_ID]['path'])
