@@ -273,6 +273,7 @@ def create_chapters_list(chapters_duration, folder_path):
             deltaD = timedelta(hours = d.hour, minutes = d.minute, seconds = d.second, microseconds = d.microsecond)
             output_string += 'CHAPTER{}={}\nCHAPTER{}NAME={}\n'.format(count, str(deltaO + last), count, filename.encode('utf-8'))
             last = deltaD + deltaO + last
+            count += 1
 
     with open(folder_path + '/chapters.txt', 'w') as file_list:
         file_list.write(output_string.encode('utf-8'))
