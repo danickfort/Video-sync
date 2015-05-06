@@ -258,7 +258,7 @@ def create_chapters_list(chapters_duration, folder_path):
     previous = ''
     for n,filename in enumerate(sorted(chapters_duration)):
         if (n == 0): #First Video
-            output_string += '{}\n00:00:{}'.format(filename.encode('utf-8'),chapters_duration[filename][1])
+            output_string += '{}\n00:00:{}\n'.format(filename.encode('utf-8'),chapters_duration[filename][1])
             o = datetime.strptime(chapters_duration[filename][1],'%S.%f')
             d = datetime.strptime(chapters_duration[filename][0],'%H:%M:%S.%f')
             deltaO = timedelta(hours = o.hour, minutes = o.minute, seconds = o.second, microseconds = o.microsecond)
@@ -269,7 +269,7 @@ def create_chapters_list(chapters_duration, folder_path):
             d = datetime.strptime(chapters_duration[filename][0],'%H:%M:%S.%f')
             deltaO = timedelta(hours = o.hour, minutes = o.minute, seconds = o.second, microseconds = o.microsecond)
             deltaD = timedelta(hours = d.hour, minutes = d.minute, seconds = d.second, microseconds = d.microsecond)
-            output_string += '{}\n{}'.format(filename.encode('utf-8'),str(deltaO + last))
+            output_string += '{}\n{}\n'.format(filename.encode('utf-8'),str(deltaO + last))
             last = deltaD + deltaO + last
     with open(folder_path + '/chapters.txt', 'w') as file_list:
         file_list.write(output_string.encode('utf-8'))
