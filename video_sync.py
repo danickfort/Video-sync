@@ -119,7 +119,7 @@ def md5_for_file(filepath, block_size=128):
             if (n == 15):
                 break
             md5.update(data)
-    return (md5.hexdigest())
+    return (md5.hexdigest()[0:9])
 
 
 
