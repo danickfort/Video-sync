@@ -41,10 +41,7 @@ def create_structure(base_level):
     for level1 in base_level:  # loop years. Level1 are years
         #Only take folders that are assimilated to years, ex: 1999
         if (re.match(r'^[0-9]{4}$', level1) and os.path.isdir('/'.join([base, level1]))):  # condition level1
-            if(level1 == '0001' or level1 == '2008'):
-                continue
-            #structure[level1] = {}
-            for level2 in os.listdir('/'.join([base, level1]).decode('utf-8')):
+            for level2 in [level1_ok for level1_ok in level1_os.listdir('/'.join([base, level1]).decode('utf-8')) if level1_ok not in ('0001', '2008')]:
                 '''loop level2. Level2 are folder with videos in them.
                 The name of the folder is the name of the future concatenated video
                 '''
